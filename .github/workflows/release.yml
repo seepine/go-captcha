@@ -10,7 +10,7 @@ on:
       - v*
 
 jobs:
-  release-image:
+  release-docker:
     runs-on: ubuntu-latest
     if: ${{ vars.DOCKER_REGISTRY != '' }}
     steps:
@@ -19,17 +19,48 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Docker build push
-        uses: seepine/action-docker-build-push@v1
+      - name: Setup Docker
+        uses: seepine/action-setup-docker@v1
+        id: meta
         with:
-          file: Dockerfile
           registry: ${{ vars.DOCKER_REGISTRY }}
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
           platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+  release-ghcr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Docker
+        uses: seepine/action-setup-docker@v1
+        id: meta
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
 
   release-assets:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -66,8 +97,8 @@ jobs:
             cd ..
           done
 
-      - name: Release product
-        uses: softprops/action-gh-release@v1
+      - name: Release assets
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/*
