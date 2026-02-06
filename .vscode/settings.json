@@ -1,0 +1,25 @@
+{
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  // 开启文件折叠
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "Dockerfile": ".dockerignore",
+    ".env": ".env, .env.*",
+    ".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+    "go.mod": "go.sum, .air.toml, .editorconfig"
+  },
+  // 隐藏某些文件或目录
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    ".husky": true,
+    ".pnpm-store": true,
+    "tmp": true
+  }
+}

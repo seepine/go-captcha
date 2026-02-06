@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: seepine/go-captcha:latest
+    ports:
+      - 8080:8080
+    deploy:
+      resources:
+        limits: # 硬性限制（最大可用资源）
+          cpus: 4
+          memory: 2048m
+        reservations: # 软性保证（最小保留资源）
+          cpus: "0.25"
+          memory: 256m
