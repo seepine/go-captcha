@@ -24,24 +24,9 @@ docker run -d \
   seepine/go-captcha
 ```
 
-### 方式二：本地运行
+### 方式二：二进制文件运行
 
-需要 Go 1.25+ 环境。
-
-```bash
-# 克隆项目
-git clone https://github.com/seepine/go-captcha.git
-cd go-captcha
-
-# 安装依赖
-go mod download
-
-# 运行
-# 可选设置环境变量：PORT=8080 API_KEYS=mysecret
-go run .
-```
-
-服务启动后，默认监听在 `:8080` 端口。
+前往 [Releases](https://github.com/seepine/go-captcha/releases) ，根据你的操作系统下载对应二进制文件，解压后即可运行。
 
 ## ⚙️ 配置说明
 
