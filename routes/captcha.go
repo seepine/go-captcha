@@ -39,9 +39,7 @@ func CaptchaGen(c *echo.Context) error {
 		return g.Fail(c, "生成验证码失败")
 	}
 
-	fmt.Println("123")
 	dotData := captData.GetData()
-	fmt.Println(dotData)
 	if dotData == nil {
 		return g.Fail(c, "生成验证码失败[2]")
 	}
